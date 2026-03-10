@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Login - Petition Handler{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center fade-in">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0 rounded-4 mt-4">
+            <div class="card-body p-5">
+                <h3 class="text-center mb-4 fw-bold text-primary">Welcome Back</h3>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="mb-3">
+                        <label for="email" class="form-label text-muted fw-semibold">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i
+                                    class="fa-solid fa-envelope text-primary"></i></span>
+                            <input type="email" class="form-control border-start-0 ps-0" id="email" name="email"
+                                placeholder="example@email.com" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label text-muted fw-semibold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i
+                                    class="fa-solid fa-lock text-primary"></i></span>
+                            <input type="password" class="form-control border-start-0 ps-0" id="password"
+                                name="password" placeholder="********" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm rounded-pill">Login to
+                        Dashboard</button>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted small">Don't have an account? <a href="{{ url_for('signup') }}"
+                                class="text-decoration-none fw-bold">Sign Up</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

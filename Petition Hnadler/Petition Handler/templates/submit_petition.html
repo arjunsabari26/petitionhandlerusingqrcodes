@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Submit Petition - Petition Handler{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center fade-in">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-primary text-white text-center py-4 rounded-top-4 border-0">
+                <h3 class="mb-0 fw-bold"><i class="fa-solid fa-paper-plane me-2"></i> Submit a Petition</h3>
+                <p class="mb-0 text-white-50 mt-1 small">Fill out the details below to raise your query.</p>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <form action="{{ url_for('submit') }}" method="POST" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">Full Name</label>
+                            <input type="text" class="form-control bg-light" name="name" required {% if
+                                current_user.is_authenticated %}value="{{ current_user.name }}" {% endif %}>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label class="form-label fw-semibold text-muted">Email</label>
+                            <input type="email" class="form-control bg-light" name="email" required {% if
+                                current_user.is_authenticated %}value="{{ current_user.email }}" {% endif %}>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">Phone Number</label>
+                            <input type="tel" class="form-control bg-light" name="phone" required
+                                placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label class="form-label fw-semibold text-muted">Query Type</label>
+                            <input type="text" class="form-control fw-bold text-primary" name="query_type" required
+                                value="{{ query_type_prefill }}" {% if query_type_prefill %}readonly{% else
+                                %}placeholder="e.g. Maintenance, IT Support" {% endif %}>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-muted">Detailed Description</label>
+                        <textarea class="form-control bg-light" name="description" rows="4" required
+                            placeholder="Provide as much context as possible..."></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-muted">Attachment <span
+                                class="small text-muted fw-normal">(Optional)</span></label>
+                        <input type="file" class="form-control" name="file" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx">
+                        <div class="form-text mt-1"><i class="fa-solid fa-paperclip"></i> Upload supporting image or
+                            document if needed.</div>
+                    </div>
+
+                    <div class="d-grid mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm fw-bold">Submit
+                            Petition</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}User Dashboard - Petition Handler{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 fade-in">
+    <h2 class="fw-bold text-secondary">My Dashboard</h2>
+    <a href="{{ url_for('submit') }}" class="btn btn-primary rounded-pill"><i class="fa-solid fa-plus me-1"></i> New
+        Petition</a>
+</div>
+
+<div class="row fade-in" style="animation-delay: 0.1s;">
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white pt-4 pb-3 border-0">
+                <h5 class="mb-0 fw-bold"><i class="fa-solid fa-list-check text-primary me-2"></i>My Submissions</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if petitions %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">ID</th>
+                                <th>Query Type</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th class="text-end pe-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for petition in petitions %}
+                            <tr>
+                                <td class="ps-4 fw-semibold font-monospace">{{ petition.petition_id }}</td>
+                                <td>{{ petition.query_type }}</td>
+                                <td>{{ petition.created_at.strftime('%b %d, %Y') }}</td>
+                                <td>
+                                    {% if petition.status == 'Submitted' %}
+                                    <span class="badge bg-secondary status-badge rounded-pill">Submitted</span>
+                                    {% elif petition.status == 'In Review' %}
+                                    <span class="badge bg-warning text-dark status-badge rounded-pill">In Review</span>
+                                    {% elif petition.status == 'Processing' %}
+                                    <span class="badge bg-info text-dark status-badge rounded-pill">Processing</span>
+                                    {% elif petition.status == 'Resolved' %}
+                                    <span class="badge bg-success status-badge rounded-pill">Resolved</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary status-badge rounded-pill">{{ petition.status
+                                        }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end pe-4">
+                                    <button type="button"
+                                        class="btn btn-sm btn-outline-primary rounded-pill px-3 position-relative"
+                                        data-bs-toggle="modal" data-bs-target="#petitionModal{{ petition.id }}">
+                                        View Details
+                                        {% if petition.status != 'Submitted' and not petition.is_read %}
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                                            <span class="visually-hidden">New alerts</span>
+                                        </span>
+                                        {% endif %}
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Modal for Petition Details -->
+                            <div class="modal fade" id="petitionModal{{ petition.id }}" tabindex="-1"
+                                aria-labelledby="modalLabel{{ petition.id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content border-0 shadow-lg">
+                                        <div class="modal-header bg-primary text-white">
+                                            <h5 class="modal-title" id="modalLabel{{ petition.id }}">Petition Details
+                                            </h5>
+                                            <button type="button" class="btn-close btn-close-white"
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body p-4">
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4 text-muted fw-semibold">Tracking ID</div>
+                                                <div class="col-sm-8 font-monospace fw-bold">{{ petition.petition_id }}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4 text-muted fw-semibold">Type</div>
+                                                <div class="col-sm-8">{{ petition.query_type }}</div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4 text-muted fw-semibold">Description</div>
+                                                <div class="col-sm-8 bg-light p-2 rounded">{{ petition.description }}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4 text-muted fw-semibold">Current Status</div>
+                                                <div class="col-sm-8 fw-bold text-primary">{{ petition.status }}</div>
+                                            </div>
+
+                                            {% if petition.response %}
+                                            <div class="mt-4 pt-3 border-top">
+                                                <div class="alert alert-success border-0 shadow-sm mb-0">
+                                                    <h6 class="alert-heading fw-bold"><i
+                                                            class="fa-solid fa-comment-dots me-2"></i>Admin Response
+                                                    </h6>
+                                                    <p class="mb-0 mt-2">{{ petition.response }}</p>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="modal-footer border-0">
+                                            {% if not petition.is_read and petition.status != 'Submitted' %}
+                                            <a href="{{ url_for('mark_read', id=petition.id) }}"
+                                                class="btn btn-primary rounded-pill">Mark as Read & Close</a>
+                                            {% else %}
+                                            <button type="button" class="btn btn-secondary rounded-pill"
+                                                data-bs-dismiss="modal">Close</button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted">
+                    <div class="display-3 mb-3 text-light"><i class="fa-solid fa-folder-open"></i></div>
+                    <h5>No petitions found.</h5>
+                    <p>You haven't submitted any petitions or queries yet.</p>
+                    <a href="{{ url_for('submit') }}" class="btn btn-primary mt-2 rounded-pill shadow-sm">Submit your
+                        first petition</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

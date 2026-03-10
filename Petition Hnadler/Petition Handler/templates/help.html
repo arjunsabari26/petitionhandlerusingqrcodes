@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Help & Support - Petition Handler{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center fade-in">
+    <div class="col-md-10 col-lg-8">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-secondary">How We Can Help You</h2>
+            <p class="text-muted">Explore frequently asked questions and how to use the QR code petition system.</p>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4 p-md-5">
+                <div class="accordion accordion-flush" id="accordionHelp">
+                    <div class="accordion-item border-bottom mb-3">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button fw-bold py-3 px-0 bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">
+                                <i class="fa-solid fa-qrcode text-primary me-3"></i> How do I use the QR codes?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionHelp">
+                            <div class="accordion-body text-muted px-0 pb-4">
+                                Point your smartphone camera at any designated Petition QR code. It will open a
+                                pre-filled submission form ensuring your query goes to the exact right department
+                                instantly.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border-bottom mb-3">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed fw-bold py-3 px-0 bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                <i class="fa-solid fa-id-card text-warning me-3"></i> What is my tracking ID?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionHelp">
+                            <div class="accordion-body text-muted px-0 pb-4">
+                                After you submit a petition, a unique 8-character ID (like AB12CD34) is generated. Keep
+                                this safe. You can enter it on the Track Status page to see updates on your request
+                                securely.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border-bottom mb-3">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed fw-bold py-3 px-0 bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                <i class="fa-solid fa-user-shield text-success me-3"></i> Do I need to create an
+                                account?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionHelp">
+                            <div class="accordion-body text-muted px-0 pb-4">
+                                No! You can scan and submit without logging in. However, creating an account gives you a
+                                powerful dashboard where you can see all your past and current petitions in one place,
+                                with notifications whenever an administrator replies.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-0">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed fw-bold py-3 px-0 bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                                <i class="fa-solid fa-envelope-open-text text-info me-3"></i> How will I know when my
+                                issue is resolved?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionHelp">
+                            <div class="accordion-body text-muted px-0 pb-4">
+                                If you have an account, you will see a red notification badge on your dashboard. You can
+                                also view the response directly. If you submitted as a guest, simply use your tracking
+                                ID to view the admin response on the timeline.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-primary text-white p-4 rounded-4 shadow text-center fade-in" style="animation-delay: 0.2s;">
+            <h5 class="fw-bold mb-3">Still need assistance?</h5>
+            <p class="mb-0 text-white-50">Contact our support center directly at <a
+                    href="mailto:support@petitionhandler.com"
+                    class="text-warning fw-bold text-decoration-none">support@petitionhandler.com</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
